@@ -22,6 +22,8 @@ BetterPowered is a Florida energy advisory service. It helps property owners ass
 
 The repository also contains the source for the [`betterpowered-energy-planning-schema`](https://www.npmjs.com/package/betterpowered-energy-planning-schema) package. It is a non-diagnostic JSON Schema for organizing evidence states, system dependencies, decision sequence, verification needs and provider responsibilities. See [`packages/energy-planning-schema`](packages/energy-planning-schema/).
 
+The same schema can be checked with the public [`betterpowered/energy-planning-schema`](https://hub.docker.com/r/betterpowered/energy-planning-schema) validator image. Container source and usage notes are in [`containers/energy-planning-schema-validator`](containers/energy-planning-schema-validator/).
+
 ## Whole-property planning scope
 
 A property decision can involve connected systems such as HVAC, ducts, insulation and air sealing, roofing, solar, battery storage, electrical upgrades, backup power and EV charging. The appropriate scope and sequence depend on the property, the owner’s goals and the evidence available.

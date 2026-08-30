@@ -1,0 +1,51 @@
+name: Publish energy-planning schema container
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Install validator dependencies
+        run: npm ci --prefix containers/energy-planning-schema-validator --ignore-scripts
+
+      - name: Validate the fictional example
+        env:
+          BETTERPOWERED_SCHEMA_PATH: packages/energy-planning-schema/schema/property-energy-plan.schema.json
+        run: >-
+          node containers/energy-planning-schema-validator/validate.mjs
+          packages/energy-planning-schema/examples/example-plan.json
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and publish multi-platform image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: containers/energy-planning-schema-validator/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            betterpowered/energy-planning-schema:0.1.0
+            betterpowered/energy-planning-schema:latest
+          provenance: true
+          sbom: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
