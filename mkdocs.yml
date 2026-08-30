@@ -1,0 +1,18 @@
+site_name: BetterPowered Energy Planning Resources
+site_description: Official BetterPowered resources for evidence-led whole-property energy planning in Florida.
+site_url: https://betterpowered-energy-planning.readthedocs.io/
+repo_url: https://github.com/Joeicorp/betterpowered-energy-planning-resources
+repo_name: BetterPowered resources on GitHub
+copyright: BetterPowered LLC
+
+theme:
+  name: readthedocs
+
+nav:
+  - Overview: index.md
+  - Planning sequence: planning-sequence.md
+  - Evidence and provider boundaries: evidence-and-boundaries.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
