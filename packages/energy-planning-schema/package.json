@@ -1,0 +1,47 @@
+{
+  "name": "betterpowered-energy-planning-schema",
+  "version": "0.1.0",
+  "description": "A non-diagnostic JSON Schema for structuring whole-property energy upgrade planning evidence, dependencies, decisions, and provider boundaries.",
+  "keywords": [
+    "energy-planning",
+    "energy-efficiency",
+    "home-performance",
+    "electrification",
+    "property-data",
+    "json-schema",
+    "florida"
+  ],
+  "homepage": "https://betterpowered.com/energy-advisory-services/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joeicorp/betterpowered-energy-planning-resources.git",
+    "directory": "packages/energy-planning-schema"
+  },
+  "bugs": {
+    "url": "https://github.com/Joeicorp/betterpowered-energy-planning-resources/issues"
+  },
+  "author": {
+    "name": "BetterPowered",
+    "email": "info@betterpowered.com",
+    "url": "https://betterpowered.com/"
+  },
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./schema": "./schema/property-energy-plan.schema.json",
+    "./example": "./examples/example-plan.json"
+  },
+  "files": [
+    "index.js",
+    "schema",
+    "examples",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node test-schema.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,295 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://betterpowered.com/schemas/property-energy-plan.schema.json",
+  "title": "BetterPowered Whole-Property Energy Planning Record",
+  "description": "A non-diagnostic structure for organizing property evidence, connected upgrade decisions, verification needs, and provider responsibilities.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "propertyContext",
+    "goals",
+    "evidence",
+    "systems",
+    "decisions",
+    "providerBoundary"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "0.1.0"
+    },
+    "propertyContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jurisdiction", "propertyType"],
+      "properties": {
+        "jurisdiction": {
+          "type": "string",
+          "minLength": 2,
+          "description": "City, county, and state context without requiring a public street address."
+        },
+        "propertyType": {
+          "type": "string",
+          "enum": [
+            "single_family",
+            "multifamily",
+            "condominium",
+            "townhome",
+            "commercial",
+            "other"
+          ]
+        },
+        "occupancyNotes": {
+          "type": "string"
+        }
+      }
+    },
+    "goals": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "lower_operating_cost",
+          "comfort",
+          "indoor_conditions",
+          "efficiency",
+          "resilience",
+          "backup_power",
+          "electrification_readiness",
+          "roof_or_solar_coordination",
+          "other"
+        ]
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "systems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/systemReview"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/decision"
+      }
+    },
+    "incentives": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/incentive"
+      }
+    },
+    "providerBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["advisoryScope", "implementationScope"],
+      "properties": {
+        "advisoryScope": {
+          "type": "string",
+          "description": "The written advisory, planning, assessment, analysis, or coordination scope."
+        },
+        "implementationScope": {
+          "type": "string",
+          "description": "The installation or trade-specific scope owned by the responsible contractor or specialist."
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "evidenceState": {
+      "type": "string",
+      "enum": [
+        "documented",
+        "reported",
+        "inferred",
+        "not_assessed"
+      ]
+    },
+    "responsibleParty": {
+      "type": "string",
+      "enum": [
+        "property_owner",
+        "betterpowered",
+        "participating_contractor",
+        "qualified_specialist",
+        "program_administrator",
+        "authority_having_jurisdiction"
+      ]
+    },
+    "evidenceItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "summary", "state"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "owner_record",
+            "utility_history",
+            "equipment_record",
+            "photo_or_video",
+            "field_observation",
+            "measurement",
+            "contractor_proposal",
+            "permit_or_property_record",
+            "program_rule",
+            "other"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "$ref": "#/$defs/evidenceState"
+        },
+        "sourceReference": {
+          "type": "string"
+        },
+        "verificationNeeded": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "systemReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "system", "evidenceIds", "verificationNeeded"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "system": {
+          "type": "string",
+          "enum": [
+            "hvac",
+            "ducts",
+            "insulation",
+            "air_sealing",
+            "roofing",
+            "solar",
+            "battery_storage",
+            "electrical_service",
+            "ev_charging",
+            "water_heating",
+            "windows_and_doors",
+            "other"
+          ]
+        },
+        "evidenceIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "planningNotes": {
+          "type": "string"
+        },
+        "dependsOnSystemIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "verificationNeeded": {
+          "type": "boolean"
+        },
+        "verificationOwner": {
+          "$ref": "#/$defs/responsibleParty"
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sequence", "title", "status", "responsibleParty"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planning",
+            "verification_required",
+            "ready_for_proposal",
+            "proposal_review",
+            "owner_decision",
+            "complete"
+          ]
+        },
+        "dependsOnDecisionIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "responsibleParty": {
+          "$ref": "#/$defs/responsibleParty"
+        }
+      }
+    },
+    "incentive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["programName", "status", "verificationSource"],
+      "properties": {
+        "programName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "research",
+            "verification_required",
+            "confirmed_by_program",
+            "not_applicable"
+          ]
+        },
+        "verificationSource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

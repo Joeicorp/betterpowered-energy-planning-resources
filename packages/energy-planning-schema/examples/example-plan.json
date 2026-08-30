@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "0.1.0",
+  "propertyContext": {
+    "jurisdiction": "Broward County, Florida",
+    "propertyType": "single_family",
+    "occupancyNotes": "Illustrative record only; it does not describe a customer or a real property."
+  },
+  "goals": [
+    "comfort",
+    "efficiency",
+    "roof_or_solar_coordination"
+  ],
+  "evidence": [
+    {
+      "id": "roof-age-record",
+      "category": "owner_record",
+      "summary": "Owner-reported roof age should be checked against available property or permit records.",
+      "state": "reported",
+      "verificationNeeded": true
+    },
+    {
+      "id": "utility-history",
+      "category": "utility_history",
+      "summary": "Twelve months of utility history are available for planning context.",
+      "state": "documented",
+      "verificationNeeded": false
+    }
+  ],
+  "systems": [
+    {
+      "id": "roof-review",
+      "system": "roofing",
+      "evidenceIds": ["roof-age-record"],
+      "planningNotes": "Confirm roof condition and timing before finalizing a solar scope.",
+      "dependsOnSystemIds": [],
+      "verificationNeeded": true,
+      "verificationOwner": "participating_contractor"
+    },
+    {
+      "id": "solar-review",
+      "system": "solar",
+      "evidenceIds": ["utility-history"],
+      "planningNotes": "Use verified roof timing and current load information before comparing proposals.",
+      "dependsOnSystemIds": ["roof-review"],
+      "verificationNeeded": true,
+      "verificationOwner": "participating_contractor"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "confirm-roof-condition",
+      "sequence": 1,
+      "title": "Confirm roof condition and realistic project timing",
+      "rationale": "Roof work can affect solar design, removal, reinstallation, and project sequencing.",
+      "status": "verification_required",
+      "dependsOnDecisionIds": [],
+      "responsibleParty": "participating_contractor"
+    },
+    {
+      "id": "compare-solar-proposals",
+      "sequence": 2,
+      "title": "Compare solar proposals against the same verified assumptions",
+      "rationale": "A common documented scope makes proposal differences easier to evaluate.",
+      "status": "planning",
+      "dependsOnDecisionIds": ["confirm-roof-condition"],
+      "responsibleParty": "betterpowered"
+    }
+  ],
+  "incentives": [
+    {
+      "programName": "Applicable current federal, state, utility, or local program",
+      "status": "verification_required",
+      "verificationSource": "Responsible program administrator or current official guidance",
+      "notes": "This example does not assert eligibility, funding availability, or tax treatment."
+    }
+  ],
+  "providerBoundary": {
+    "advisoryScope": "BetterPowered may organize evidence, identify dependencies, support planning, and review project decisions within the agreed scope.",
+    "implementationScope": "The responsible contractor or specialist owns trade-specific diagnosis, design, equipment selection, permits, installation, warranties, and its customer agreement.",
+    "limitations": [
+      "This record is not a final engineering design, permit, code analysis, or contractor proposal.",
+      "Field verification remains necessary where the available evidence is insufficient.",
+      "Savings, performance, resilience, incentives, and project outcomes are not guaranteed."
+    ]
+  }
+}
