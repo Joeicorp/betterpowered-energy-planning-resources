@@ -6,6 +6,7 @@ BetterPowered is a Florida energy advisory service. It helps property owners ass
 
 ## Start here
 
+- [BetterPowered energy planning documentation](https://betterpowered-energy-planning-resources.readthedocs.io/)
 - [BetterPowered](https://betterpowered.com/)
 - [Energy advisory services](https://betterpowered.com/energy-advisory-services/)
 - [Whole-home energy assessment](https://betterpowered.com/energy-advisory-services/whole-home-energy-assessment/)
